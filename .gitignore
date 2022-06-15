@@ -1,0 +1,14 @@
+/target
+/Cargo.lock
+.vscode/
+logs/
+
+*.data
+*.merge
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
