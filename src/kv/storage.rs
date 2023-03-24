@@ -203,12 +203,11 @@ impl SimplifiedBitcask {
         loop {
             match self.read_at(offset) {
                 Ok(e) => {
-                    if e.kind == CmdKind::DEL {
-                        self.index.remove(&e.key);
-                        continue;
-                    }
                     let size = e.size() as u64;
-                    self.index.insert(e.key, offset);
+                    match e.kind {
+                        CmdKind::DEL => self.index.remove(&e.key),
+                        CmdKind::PUT => self.index.insert(e.key, offset),
+                    };
                     offset += size;
                 }
                 Err(KvsError::EOF) => {
